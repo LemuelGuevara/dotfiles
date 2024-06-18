@@ -4,7 +4,7 @@ return {
   -- Optional dependencies
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
-    require('oil').setup( {
+    require('oil').setup {
       delete_to_trash = true,
       columns = { 'icon' },
       view_options = {
@@ -20,7 +20,7 @@ return {
       --     winblend = 0,
       --   },
       -- },
-    )}
+    }
 
     vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
     -- vim.keymap.set('n', '\\', require('oil').toggle_float)
