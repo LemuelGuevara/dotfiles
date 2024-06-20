@@ -26,7 +26,7 @@ return {
       local colors = {
         blue = '#89b4fa',
         cyan = '#74c7ec',
-        black = '#080808',
+        black = '#313244',
         white = '#cdd6f4',
         red = '#f38ba8',
         violet = '#cba6f7',
