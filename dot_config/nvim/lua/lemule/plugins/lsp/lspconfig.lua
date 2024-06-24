@@ -4,7 +4,7 @@ return {
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
-    { "folke/neodev.nvim", opts = {} },
+    { "folke/neodev.nvim",                   opts = {} },
   },
   config = function()
     -- import lspconfig plugin
@@ -85,23 +85,16 @@ return {
           capabilities = capabilities,
         })
       end,
-      ["lua_ls"] = function()
-        -- configure lua server (with special settings)
-        lspconfig["lua_ls"].setup({
+      ['tsserver'] = function()
+        lspconfig.tsserver.setup({
           capabilities = capabilities,
           settings = {
-            Lua = {
-              -- make the language server recognize "vim" global
-              diagnostics = {
-                globals = { "vim" },
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-            },
-          },
+            completions = {
+              completeFunctionCalls = true
+            }
+          }
         })
-      end,
+      end
     })
   end,
 }

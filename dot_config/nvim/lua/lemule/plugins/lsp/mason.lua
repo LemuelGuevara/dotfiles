@@ -32,20 +32,17 @@ return {
 				"cssls",
 				"tailwindcss",
 				"lua_ls",
-				"emmet_ls",
 				"pyright",
 			},
 		})
 
 		mason_tool_installer.setup({
-			ensure_installed = {
 				"prettierd", -- prettier formatter
 				"stylua", -- lua formatter
 				"isort", -- python formatter
 				"black", -- python formatter
 				"pylint", -- python linter
 				"eslint_d", -- js linter
-			},
-		})
+			})
 	end,
 }
