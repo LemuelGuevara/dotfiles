@@ -91,7 +91,10 @@ return {
           settings = {
             completions = {
               completeFunctionCalls = true
-            }
+            },
+            codeActionsOnSave = {
+              ["source.organizeImports"] = true,
+            },
           }
         })
       end
