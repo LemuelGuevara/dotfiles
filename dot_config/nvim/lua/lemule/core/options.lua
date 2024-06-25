@@ -37,3 +37,13 @@ opt.splitbelow = true
 
 -- disable swap
 opt.swapfile = false
+
+-- save undo history
+opt.undofile = true
+
+-- decrease update time
+opt.updatetime = 250
+
+-- cecrease mapped sequence wait time
+-- displays which-key popup sooner
+opt.timeoutlen = 300
