@@ -108,22 +108,16 @@ return {
               description = 'Organize Imports',
             },
           },
-          -- on_attach = function(client, bufnr)
-          --   vim.api.nvim_create_autocmd('BufWritePre', {
-          --     pattern = { '*.ts', '*.tsx' },
-          --     callback = function()
-          --       local params = {
-          --         context = { only = { 'source.organizeImports' } },
-          --         diagnostics = {},
-          --       }
-          --       vim.lsp.buf.execute_command {
-          --         command = 'typescript.organizeImports',
-          --         arguments = { params },
-          --         title = 'Organize Imports',
-          --       }
-          --     end,
-          --   })
-          -- end,
+        }
+      end,
+      ['basedpyright'] = function()
+        lspconfig.basedpyright.setup {
+          capabilities = capabilities,
+          settings = {
+            basedpyright = {
+              typeCheckingMode = 'standard',
+            },
+          },
         }
       end,
     }
