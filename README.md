@@ -1,10 +1,10 @@
-## dotfiles configuration
+# My dotfiles :gear:
 
 dotfiles configuration across unix based systems e.g. macos and linux
 
-## Tmux + Neovim
-
-![[Screenshot 2024-08-06 at 21.54.10.png]]
+## Tmux + Neovim :tea:
+`i know its quite boring, but i am a minimal person`
+![Screenshot 2024-08-06 at 21 54 10](https://github.com/user-attachments/assets/dd4bf4b2-d3d9-4aaf-9495-ccd25c1fc8b2)
 
 ## Config setup
 
@@ -39,9 +39,9 @@ stow --adopt .
 
 ## Post installation
 
-- Neovim
+- **Neovim**
   - Open to install packages
-- Tmux
+- **Tmux**
   - Open a new tmux session
   - `ctrl + r then shift + i` to install the plugins
 
