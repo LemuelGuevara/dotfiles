@@ -65,8 +65,8 @@ alias java11='export JAVA_HOME=$JAVA_11_HOME'
 alias java17='export JAVA_HOME=$JAVA_17_HOME'
 alias java19='export JAVA_HOME=$JAVA_19_HOME'
 
-# default to Java 8
-java8
+# default to Java 11
+java11
 
 # bun completions
 [ -s "/Users/lemuelguevara/.bun/_bun" ] && source "/Users/lemuelguevara/.bun/_bun"
