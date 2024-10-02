@@ -88,3 +88,6 @@ alias ls='eza --icons -l'
 
 # zoxide
 eval "$(zoxide init zsh)"
+
+# fzf preview
+alias inv='nvim $(fzf --preview="bat --color=always {}")'
