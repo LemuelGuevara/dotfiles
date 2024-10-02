@@ -59,6 +59,9 @@ return { -- Fuzzy Finder (files, lsp, etc)
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
 				},
+				["flutter"] = {
+					require("telescope").load_extension("flutter"),
+				},
 			},
 		})
 
