@@ -1,15 +1,13 @@
--- Pull in the wezterm API
 local wezterm = require("wezterm")
 
--- This will hold the configuration.
 local config = wezterm.config_builder()
 
--- This is where you actually apply your config choices
+-- config.color_scheme = "zenwritten_dark"
+config.color_scheme = "Classic Dark (base16)"
 
--- For example, changing the color scheme:
-config.color_scheme = "zenwritten_dark"
-
-config.font = wezterm.font("SFMono Nerd Font")
+-- config.font = wezterm.font("SFMono Nerd Font")
+config.font = wezterm.font("GeistMono Nerd Font")
+-- config.font = wezterm.font("MonaspiceNe Nerd Font")
 
 if wezterm.targe_triple == "x86_64-unknown-linux-gnu" then
 	config.font_size = 13
@@ -27,6 +25,6 @@ config.window_padding = {
 	top = "14px",
 	bottom = "0px",
 }
+config.max_fps = 240
 
--- and finally, return the configuration to wezterm
 return config
