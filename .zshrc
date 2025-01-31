@@ -30,7 +30,7 @@ fi
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
+if [ 1 -eq 0 ]; then
     eval "$__conda_setup"
 else
     if [ -f "/opt/anaconda3/etc/profile.d/conda.sh" ]; then
@@ -48,7 +48,6 @@ export PATH="$HOME/.local/bin":$PATH
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
 # Flutter PATH
@@ -82,6 +81,7 @@ if [ -d "$FNM_PATH" ]; then
   export PATH="/Users/lemuelguevara/Library/Application Support/fnm:$PATH"
   eval "`fnm env`"
 fi
+eval "$(fnm env --use-on-cd --shell zsh)"
 
 # eza alias
 alias ls='eza --icons -l'
@@ -91,3 +91,14 @@ eval "$(zoxide init zsh)"
 
 # fzf preview
 alias inv='nvim $(fzf --preview="bat --color=always {}")'
+
+# chromdriver
+export PATH=$PATH:/opt/homebrew/bin/chromedriver
+
+export PATH="/Users/lemuelguevara/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/Users/lemuelguevara/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
+export PATH="$PATH":"$HOME/.pub-cache/bin"
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/lemuelguevara/.lmstudio/bin"
