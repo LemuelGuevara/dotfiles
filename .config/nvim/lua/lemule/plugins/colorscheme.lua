@@ -1,4 +1,4 @@
-local selected_theme = "zenbones"
+local selected_theme = "no-clown-fiesta"
 
 local themes = {
 	catppuccin = {
@@ -13,8 +13,8 @@ local themes = {
 		"olivercederborg/poimandres.nvim",
 		opts = {
 			config = true,
-			disable_background = false, -- disable background
-			disable_float_background = false, -- disable background for floats
+			disable_background = true, -- disable background
+			disable_float_background = true, -- disable background for floats
 		},
 	},
 	zenbones = {
@@ -25,6 +25,27 @@ local themes = {
 		otps = {
 			config = true,
 			darkness = "dark",
+		},
+	},
+	mellifluous = {
+		"ramojus/mellifluous.nvim",
+		opts = {
+			config = true,
+			transparent_background = {
+				enabled = true,
+				floating_windows = true,
+				telescope = true,
+				file_tree = true,
+				cursor_line = true,
+				status_line = false,
+			},
+		},
+	},
+	["no-clown-fiesta"] = {
+		"aktersnurra/no-clown-fiesta.nvim",
+		opts = {
+			config = true,
+			transparent = true,
 		},
 	},
 }
