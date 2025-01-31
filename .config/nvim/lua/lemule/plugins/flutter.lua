@@ -1,5 +1,5 @@
 return {
-	"akinsho/flutter-tools.nvim",
+	"nvim-flutter/flutter-tools.nvim",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"stevearc/dressing.nvim",
@@ -10,6 +10,9 @@ return {
 		flutter.setup({
 			widget_guides = {
 				enabled = true,
+			},
+			settings = {
+				enableSnippets = true,
 			},
 		})
 
