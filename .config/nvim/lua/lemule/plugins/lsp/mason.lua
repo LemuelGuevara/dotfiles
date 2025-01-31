@@ -43,6 +43,7 @@ return {
 				"ruff",
 				"isort",
 				"black",
+				"pylint",
 			},
 		})
 	end,
