@@ -2,7 +2,8 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
+		-- "hrsh7th/cmp-nvim-lsp",
+		"saghen/blink.cmp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{ "folke/neodev.nvim", opts = {} },
 	},
@@ -14,7 +15,7 @@ return {
 		local mason_lspconfig = require("mason-lspconfig")
 
 		-- import cmp-nvim-lsp plugin
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
+		local completion_plugin = require("blink.cmp")
 
 		local keymap = vim.keymap -- for conciseness
 
@@ -74,7 +75,7 @@ return {
 			vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
 		-- used to enable autocompletion (assign to every lsp server config)
-		local capabilities = cmp_nvim_lsp.default_capabilities()
+		local capabilities = completion_plugin.get_lsp_capabilities()
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
@@ -89,6 +90,30 @@ return {
 			function(server_name)
 				lspconfig[server_name].setup({
 					capabilities = capabilities,
+				})
+			end,
+			["lua-ls"] = function()
+				lspconfig["lua_ls"].setup({
+					capabilities = capabilities,
+					settings = {
+						Lua = {
+							-- make the language server recognize "vim" global
+							diagnostics = {
+								globals = { "vim" },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+							hint = {
+								enable = true,
+								setType = false,
+								paramType = true,
+								paramName = "Disable",
+								semicolon = "Disable",
+								arrayIndex = "Disable",
+							},
+						},
+					},
 				})
 			end,
 			["ts_ls"] = function()
