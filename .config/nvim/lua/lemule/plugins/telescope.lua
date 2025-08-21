@@ -1,10 +1,10 @@
 return { -- Fuzzy Finder (files, lsp, etc)
+	enabled = false,
 	"nvim-telescope/telescope.nvim",
 	event = "VimEnter",
 	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"folke/todo-comments.nvim",
 		{ -- If encountering errors, see telescope-fzf-native README for installation instructions
 			"nvim-telescope/telescope-fzf-native.nvim",
 
@@ -58,9 +58,6 @@ return { -- Fuzzy Finder (files, lsp, etc)
 			extensions = {
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
-				},
-				["flutter"] = {
-					require("telescope").load_extension("flutter"),
 				},
 			},
 		})
