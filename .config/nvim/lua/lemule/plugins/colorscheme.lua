@@ -1,13 +1,14 @@
 local selected_theme = "no-clown-fiesta"
 
 local themes = {
-	catppuccin = {
-		"catppuccin/nvim",
-		name = "catppuccin",
-		opts = {
-			flavour = "mocha",
-			transparent_background = true,
-		},
+	vague = {
+		"vague2k/vague.nvim",
+		config = function()
+			require("vague").setup({
+				transparent = true,
+				strings = "none",
+			})
+		end,
 	},
 	poimandres = {
 		"olivercederborg/poimandres.nvim",
@@ -47,6 +48,13 @@ local themes = {
 			config = true,
 			transparent = true,
 		},
+	},
+	["gruvbox-material"] = {
+		"sainnhe/gruvbox-material",
+		config = function()
+			vim.g.gruvbox_material_enable_italic = true
+			vim.cmd("colorscheme gruvbox-material")
+		end,
 	},
 }
 
