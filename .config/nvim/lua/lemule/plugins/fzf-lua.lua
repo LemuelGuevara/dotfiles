@@ -17,5 +17,8 @@ return {
 		vim.keymap.set("n", "<leader>sr", fzf.resume, { desc = "[S]earch [R]esume" })
 		vim.keymap.set("n", "<leader>s.", fzf.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 		vim.keymap.set("n", "<leader><leader>", fzf.buffers, { desc = "[ ] Find existing buffers" })
+		vim.keymap.set("n", "<leader>fc", function()
+			fzf.files({ cwd = vim.fn.stdpath("config") })
+		end, { desc = "Find files in config" })
 	end,
 }
