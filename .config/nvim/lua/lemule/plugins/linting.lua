@@ -9,7 +9,7 @@ return {
 			typescript = { "eslint" },
 			javascriptreact = { "eslint" },
 			typescriptreact = { "eslint" },
-			python = { "pylint" },
+			python = { "ruff" },
 		}
 
 		local eslint = lint.linters.eslint
@@ -32,9 +32,6 @@ return {
 				lint.try_lint()
 			end,
 		})
-
-		lint.linters.pylint.cmd = "python"
-		lint.linters.pylint.args = { "-m", "pylint", "-f", "json" }
 
 		vim.keymap.set("n", "<leader>l", function()
 			lint.try_lint()
