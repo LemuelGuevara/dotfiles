@@ -2,28 +2,25 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		-- "hrsh7th/cmp-nvim-lsp",
-		"saghen/blink.cmp",
-		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ "folke/neodev.nvim", opts = {} },
+		"folke/lazydev.nvim",
+		"hrsh7th/cmp-nvim-lsp",
+		"mason-org/mason-lspconfig.nvim",
 	},
 	config = function()
-		-- import lspconfig plugin
-		local lspconfig = require("lspconfig")
-
-		-- import mason_lspconfig plugin
-		local mason_lspconfig = require("mason-lspconfig")
+		require("mason-lspconfig").setup({
+			automatic_enable = { exclude = { "ruff" } },
+			ensure_installed = {},
+		})
 
 		-- import cmp-nvim-lsp plugin
-		local completion_plugin = require("blink.cmp")
+		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 		local keymap = vim.keymap -- for conciseness
-
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
 				-- Buffer local mappings.
-				-- See :help vim.lsp.* for documentation on any of the below functions
+				-- See `:help vim.lsp.*` for documentation on any of the below functions
 				local opts = { buffer = ev.buf, silent = true }
 
 				-- set keybinds
@@ -61,114 +58,112 @@ return {
 				keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
 				opts.desc = "Show documentation for what is under cursor"
-				keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+				keymap.set("n", "K", function()
+					vim.lsp.buf.hover({
+						border = "rounded",
+						max_height = 25,
+						max_width = 120,
+					})
+				end, opts)
 
 				opts.desc = "Restart LSP"
 				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 			end,
 		})
 
-		-- borders for def hover
-		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-
-		vim.lsp.handlers["textDocument/signatureHelp"] =
-			vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+		vim.diagnostic.config({
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = " ",
+					[vim.diagnostic.severity.WARN] = " ",
+					[vim.diagnostic.severity.HINT] = "󰠠 ",
+					[vim.diagnostic.severity.INFO] = " ",
+				},
+			},
+			float = {
+				border = "rounded",
+				max_width = 120,
+				max_height = 25,
+				focusable = false,
+				source = "always",
+				header = "",
+				prefix = "",
+			},
+		})
 
 		-- used to enable autocompletion (assign to every lsp server config)
-		local capabilities = completion_plugin.get_lsp_capabilities()
+		local capabilities =
+			vim.tbl_extend("force", vim.lsp.protocol.make_client_capabilities(), cmp_nvim_lsp.default_capabilities())
 
-		-- Change the Diagnostic symbols in the sign column (gutter)
-		-- (not in youtube nvim video)
-		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-		end
+		vim.lsp.config("*", {
+			capabilities = capabilities,
+			on_attach = function(_, bufnr)
+				vim.treesitter.start(bufnr)
+			end,
+		})
 
-		mason_lspconfig.setup_handlers({
-			-- default handler for installed servers
-			function(server_name)
-				lspconfig[server_name].setup({
-					capabilities = capabilities,
-				})
-			end,
-			["lua-ls"] = function()
-				lspconfig["lua_ls"].setup({
-					capabilities = capabilities,
-					settings = {
-						Lua = {
-							-- make the language server recognize "vim" global
-							diagnostics = {
-								globals = { "vim" },
-							},
-							completion = {
-								callSnippet = "Replace",
-							},
-							hint = {
-								enable = true,
-								setType = false,
-								paramType = true,
-								paramName = "Disable",
-								semicolon = "Disable",
-								arrayIndex = "Disable",
-							},
-						},
-					},
-				})
-			end,
-			["ts_ls"] = function()
+		vim.lsp.config("ts_ls", {
+			on_attach = function(_, bufnr)
+				vim.lsp.config["*"].on_attach(_, bufnr)
+
 				local function organize_imports()
-					local params = {
+					vim.lsp.buf_request_sync(bufnr, "workspace/executeCommand", {
 						command = "_typescript.organizeImports",
-						arguments = { vim.api.nvim_buf_get_name(0) },
+						arguments = { vim.api.nvim_buf_get_name(bufnr) },
 						title = "",
-					}
-					vim.lsp.buf.execute_command(params)
+					}, 500)
+
+					vim.notify("Imports Organized", vim.log.levels.INFO)
 				end
 
-				lspconfig.ts_ls.setup({
-					root_dir = require("lspconfig.util").root_pattern(
-						"tsconfig.json",
-						"jsconfig.json",
-						"package.json",
-						".git"
-					),
-					single_file_support = true,
-					capabilities = capabilities,
-					settings = {
-						completions = {
-							completeFunctionCalls = true,
-						},
-					},
-					commands = {
-						OrganizeImports = {
-							organize_imports,
-							description = "Organize Imports",
-						},
-					},
-				})
+				vim.keymap.set(
+					"n",
+					"<leader>oi",
+					organize_imports,
+					{ buffer = bufnr, desc = "Organize Imports", silent = true }
+				)
+
+				vim.api.nvim_buf_create_user_command(
+					bufnr,
+					"OrganizeImports",
+					organize_imports,
+					{ desc = "Organize TS imports" }
+				)
 			end,
-			["pyright"] = function()
-				lspconfig.pyright.setup({
-					capabilities = capabilities,
-					settings = {
-						pyright = {
-							typeCheckingMode = "standard",
-						},
+		})
+
+		vim.lsp.config("pyright", {
+			settings = {
+				pyright = {
+					-- Using Ruff's import organizer
+					disableOrganizeImports = true,
+				},
+				python = {
+					analysis = {
+						-- Ignore all files for analysis to exclusively use Ruff for linting
+						ignore = { "*" },
+						autoImportCompletions = true,
 					},
-				})
-			end,
-			["ruff"] = function()
-				lspconfig.ruff.setup({
-					capabilities = capabilities,
-					settings = {
-						organizeImports = false,
+				},
+			},
+		})
+
+		vim.lsp.config("eslint", {
+			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+		})
+
+		vim.lsp.config("lua_ls", {
+			settings = {
+				Lua = {
+					-- make the language server recognize "vim" global
+					diagnostics = {
+						globals = { "vim" },
 					},
-					on_attach = function(client)
-						client.server_capabilities.hoverProvider = false
-					end,
-				})
-			end,
+					completion = {
+						callSnippet = "Replace",
+					},
+				},
+			},
 		})
 	end,
 }

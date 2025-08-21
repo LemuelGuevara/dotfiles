@@ -1,50 +1,56 @@
 return {
-	"williamboman/mason.nvim",
-	dependencies = {
-		"williamboman/mason-lspconfig.nvim",
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
-	},
+	"mason-org/mason.nvim",
+	keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Open Mason", silent = true } },
+	dependencies = { "WhoIsSethDaniel/mason-tool-installer.nvim" },
+	build = ":MasonUpdate",
 	config = function()
-		-- import mason
-		local mason = require("mason")
+		local ensure_installed = {
+			-- Formatters
+			"stylua", -- Lua
+			"prettierd", -- JS/TS/HTML/CSS
+			"ruff", -- Python
 
-		-- import mason-lspconfig
-		local mason_lspconfig = require("mason-lspconfig")
+			-- Linters
+			"eslint_d", -- JS/TS
+			"selene", -- Lua
 
-		local mason_tool_installer = require("mason-tool-installer")
+			-- LSP Servers
+			"pyright", -- Python
+			"lua-language-server", -- Lua
+			"typescript-language-server", -- JS/TS
+			"tailwindcss-language-server",
+			"json-lsp", -- JSON
+			"rust-analyzer", -- Rust
+		}
 
-		-- enable mason and configure icons
-		mason.setup({
-			ui = {
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
-				},
-			},
-		})
+		require("mason").setup({ max_concurrent_installers = 4 })
 
-		mason_lspconfig.setup({
-			-- list of servers for mason to install
-			ensure_installed = {
-				"ts_ls",
-				"html",
-				"cssls",
-				"tailwindcss",
-				"lua_ls",
-				"pyright",
-			},
-		})
+		require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-		mason_tool_installer.setup({
-			ensure_installed = {
-				"prettierd", -- prettier formatter
-				"stylua", -- lua formatter
-				"ruff",
-				"isort",
-				"black",
-				"pylint",
-			},
-		})
+		local registry = require("mason-registry")
+
+		registry:on("package:install:success", function()
+			vim.defer_fn(function()
+				vim.cmd("doautocmd FileType")
+			end, 100)
+		end)
+
+		registry:on("package:install:failed", function(receipt)
+			vim.notify(("Mason failed to install %s"):format(receipt.package:name()), vim.log.levels.ERROR)
+		end)
+
+		registry.refresh(function()
+			for _, tool in ipairs(ensure_installed) do
+				local package = registry.get_package(tool)
+
+				if not package:is_installed() and not package:is_installing() then
+					package:install({}, function(success)
+						if not success then
+							vim.notify(("Failed installing %s"):format(package:name()), vim.log.levels.ERROR)
+						end
+					end)
+				end
+			end
+		end)
 	end,
 }
