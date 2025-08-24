@@ -1,4 +1,4 @@
-local selected_theme = "no-clown-fiesta"
+local selected_theme = "vague"
 
 local themes = {
 	vague = {
