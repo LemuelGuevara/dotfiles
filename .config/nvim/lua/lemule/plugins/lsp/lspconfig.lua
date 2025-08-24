@@ -5,8 +5,17 @@ return {
 		"folke/lazydev.nvim",
 		"hrsh7th/cmp-nvim-lsp",
 		"mason-org/mason-lspconfig.nvim",
+		"ibhagwan/fzf-lua",
+
+		-- Status updates for LSP
+		{ "j-hui/fidget.nvim", opts = {} },
 	},
 	config = function()
+		-- local fzf = require("fzf-lua")
+		local snacks = require("snacks")
+		local picker = snacks.picker
+		local keymap = vim.keymap
+
 		require("mason-lspconfig").setup({
 			automatic_enable = { exclude = { "ruff" } },
 			ensure_installed = {},
@@ -15,47 +24,46 @@ return {
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-		local keymap = vim.keymap -- for conciseness
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
-				-- Buffer local mappings.
-				-- See `:help vim.lsp.*` for documentation on any of the below functions
 				local opts = { buffer = ev.buf, silent = true }
 
-				-- set keybinds
 				opts.desc = "Show LSP references"
-				keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
-
+				keymap.set("n", "gR", picker.lsp_references, opts)
+				--
 				opts.desc = "Go to declaration"
-				keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- go to declaration
-
+				keymap.set("n", "gD", vim.lsp.buf.declaration, opts) -- builtin
+				--
 				opts.desc = "Show LSP definitions"
-				keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
-
+				keymap.set("n", "gd", picker.lsp_definitions, opts)
+				--
 				opts.desc = "Show LSP implementations"
-				keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
-
+				keymap.set("n", "gi", picker.lsp_implementations, opts)
+				--
 				opts.desc = "Show LSP type definitions"
-				keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
+				keymap.set("n", "gt", picker.lsp_type_definitions, opts)
 
 				opts.desc = "See available code actions"
-				keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
+				keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 
 				opts.desc = "Smart rename"
-				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- smart rename
+				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts) -- builtin
 
-				opts.desc = "Show buffer diagnostics"
-				keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
+				-- opts.desc = "Show buffer diagnostics"
+				-- keymap.set("n", "<leader>D", fzf.diagnostics_document, opts)
+				--
+				-- opts.desc = "Show workspace diagnostics"
+				-- keymap.set("n", "<leader>WD", fzf.diagnostics_workspace, opts)
 
 				opts.desc = "Show line diagnostics"
-				keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts) -- show diagnostics for line
+				keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 
 				opts.desc = "Go to previous diagnostic"
-				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts) -- jump to previous diagnostic in buffer
+				keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 
 				opts.desc = "Go to next diagnostic"
-				keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
+				keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
 				opts.desc = "Show documentation for what is under cursor"
 				keymap.set("n", "K", function()
@@ -67,7 +75,7 @@ return {
 				end, opts)
 
 				opts.desc = "Restart LSP"
-				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
 			end,
 		})
 
@@ -91,7 +99,7 @@ return {
 			},
 		})
 
-		-- used to enable autocompletion (assign to every lsp server config)
+		-- enable autocompletion capabilities
 		local capabilities =
 			vim.tbl_extend("force", vim.lsp.protocol.make_client_capabilities(), cmp_nvim_lsp.default_capabilities())
 
@@ -122,7 +130,6 @@ return {
 					organize_imports,
 					{ buffer = bufnr, desc = "Organize Imports", silent = true }
 				)
-
 				vim.api.nvim_buf_create_user_command(
 					bufnr,
 					"OrganizeImports",
@@ -132,21 +139,7 @@ return {
 			end,
 		})
 
-		vim.lsp.config("pyright", {
-			settings = {
-				pyright = {
-					-- Using Ruff's import organizer
-					disableOrganizeImports = true,
-				},
-				python = {
-					analysis = {
-						-- Ignore all files for analysis to exclusively use Ruff for linting
-						ignore = { "*" },
-						autoImportCompletions = true,
-					},
-				},
-			},
-		})
+		vim.lsp.config("pyrefly", {})
 
 		vim.lsp.config("eslint", {
 			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
@@ -155,13 +148,8 @@ return {
 		vim.lsp.config("lua_ls", {
 			settings = {
 				Lua = {
-					-- make the language server recognize "vim" global
-					diagnostics = {
-						globals = { "vim" },
-					},
-					completion = {
-						callSnippet = "Replace",
-					},
+					diagnostics = { globals = { "vim" } },
+					completion = { callSnippet = "Replace" },
 				},
 			},
 		})
