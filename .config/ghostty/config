@@ -1,0 +1,14 @@
+font-family = IBM Plex Mono
+font-size = 16
+
+theme = vague
+
+cursor-style = bar
+
+confirm-close-surface = false
+
+window-padding-x = 5
+window-padding-y = 5
+window-padding-balance = true
+
+macos-titlebar-style = hidden
