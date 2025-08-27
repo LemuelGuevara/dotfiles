@@ -67,17 +67,12 @@ function ll
   exa -l --icons
 end
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-if test -f /Users/lemuelguevara/miniconda3/bin/conda
-    eval /Users/lemuelguevara/miniconda3/bin/conda "shell.fish" "hook" $argv | source
-else
-    if test -f "/Users/lemuelguevara/miniconda3/etc/fish/conf.d/conda.fish"
-        . "/Users/lemuelguevara/miniconda3/etc/fish/conf.d/conda.fish"
-    else
-        set -x PATH "/Users/lemuelguevara/miniconda3/bin" $PATH
-    end
-end
-# <<< conda initialize <<<
 
-
+# >>> mamba initialize >>>
+# !! Contents within this block are managed by 'mamba shell init' !!
+set -gx MAMBA_EXE "/opt/homebrew/bin/mamba"
+set -gx MAMBA_ROOT_PREFIX "/Users/lemuelguevara/.local/share/mamba"
+$MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
+alias mamba micromamba
+mamba activate base
+# <<< mamba initialize <<<
