@@ -1,15 +1,15 @@
 # My dotfiles :gear:
 
-dotfiles configuration across unix based systems e.g. macos and linux
+Dotfiles configuration across unix based systems e.g. macos and linux
 
 ## Tmux + Neovim :tea:
-`i know its quite boring, but i am a minimal person`
-![Screenshot 2024-08-06 at 21 54 10](https://github.com/user-attachments/assets/dd4bf4b2-d3d9-4aaf-9495-ccd25c1fc8b2)
+<img width="1772" height="1116" alt="Screenshot 2025-08-27 at 20 52 51" src="https://github.com/user-attachments/assets/116e8829-c8cc-4861-999b-6a86a89e417d" />
+
 
 ## Config setup
 
 - **Terminal:** wezterm
-- **Shell:** zsh with starship
+- **Shell:** fish with starship
 - **Text-editor:** neovim
 - **Multiplexer:** tmux
 
@@ -18,6 +18,7 @@ dotfiles configuration across unix based systems e.g. macos and linux
 - git
 - stow
 - neovim
+- fish
 
 ## Installation
 
