@@ -30,9 +30,6 @@ return {
 			completion = {
 				completeopt = "menu,menuone,preview,noselect",
 			},
-			performance = {
-				max_view_entries = 7,
-			},
 			snippet = { -- configure how nvim-cmp interacts with snippet engine
 				expand = function(args)
 					luasnip.lsp_expand(args.body)
@@ -64,8 +61,14 @@ return {
 			-- configure lspkind for vs-code like pictograms in completion menu
 			formatting = {
 				format = lspkind.cmp_format({
-					maxwidth = 50,
-					ellipsis_char = "...",
+					mode = "symbol_text",
+					menu = {
+						buffer = "[Buffer]",
+						nvim_lsp = "[LSP]",
+						luasnip = "[LuaSnip]",
+						nvim_lua = "[Lua]",
+						latex_symbols = "[Latex]",
+					},
 				}),
 			},
 		})
