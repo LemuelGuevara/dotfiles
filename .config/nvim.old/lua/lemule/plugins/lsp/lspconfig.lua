@@ -153,5 +153,16 @@ return {
 				},
 			},
 		})
+
+		vim.lsp.config("jdtls", {
+			init_options = {
+				settings = {
+					java = {
+						project = { sourcePaths = { "src" } },
+						configuration = { runtimes = { { path = vim.env.JAVA_HOME } } },
+					},
+				},
+			},
+		})
 	end,
 }

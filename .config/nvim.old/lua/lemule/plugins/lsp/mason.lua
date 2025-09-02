@@ -22,6 +22,7 @@ return {
 			"tailwindcss-language-server",
 			"json-lsp", -- JSON
 			"rust-analyzer", -- Rust
+			"jdtls", -- Java
 		}
 
 		require("mason").setup({ max_concurrent_installers = 4 })
