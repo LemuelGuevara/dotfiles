@@ -22,6 +22,9 @@ vim.pack.add({
 	{ src = "https://github.com/folke/snacks.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 	{ src = "https://github.com/kdheepak/lazygit.nvim" },
+
+	-- Others
+	{ src = "https://github.com/vyfor/cord.nvim" },
 })
 
 require("plugins.appearance")
