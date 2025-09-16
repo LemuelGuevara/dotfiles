@@ -21,7 +21,23 @@ vim.lsp.config("lua_ls", {
 	},
 })
 
-vim.lsp.config("pyrefly", {})
+vim.lsp.config("pyrefly", {
+	settings = {
+		python = {
+			filetypes = { "python" },
+			root_markers = {
+				"pyrefly.toml",
+				"pyproject.toml",
+				"setup.py",
+				"setup.cfg",
+				"requirements.txt",
+				"Pipfile",
+				".git",
+			},
+			displayTypeErrors = true,
+		},
+	},
+})
 vim.lsp.config("ts_ls", {
 	on_attach = function(_, bufnr)
 		local function organize_imports()
@@ -50,11 +66,24 @@ vim.lsp.config("ts_ls", {
 })
 
 vim.lsp.config("rust-analyzer", {})
+vim.lsp.config("ty", {
+	settings = {
+		ty = {
+			diagnosticMode = "workspace",
+			inlayHints = {
+				variableTypes = false,
+			},
+			experimental = {
+				rename = true,
+			},
+		},
+	},
+})
 vim.diagnostic.config({ virtual_text = true })
 
 vim.lsp.enable({
 	"lua_ls",
-	"pyrefly",
+	"ty",
 	"ts_ls",
 	"rust-analyzer",
 })
