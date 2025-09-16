@@ -50,31 +50,17 @@ vim.keymap.set("n", "<leader>uC", snacks.picker.colorschemes, { desc = "Colorsch
 -- LSP
 vim.keymap.set("n", "gd", snacks.picker.lsp_definitions, { desc = "Goto Definition" })
 vim.keymap.set("n", "gD", snacks.picker.lsp_declarations, { desc = "Goto Declaration" })
+vim.keymap.set("n", "gR", snacks.picker.lsp_references, { desc = "References" })
 vim.keymap.set("n", "gy", snacks.picker.lsp_type_definitions, { desc = "Goto T[y]pe Definition" })
 vim.keymap.set("n", "<leader>ss", snacks.picker.lsp_symbols, { desc = "LSP Symbols" })
 vim.keymap.set("n", "<leader>sS", snacks.picker.lsp_workspace_symbols, { desc = "LSP Workspace Symbols" })
 
-local picker = snacks.picker
 local keymap = vim.keymap
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 	callback = function(ev)
 		local opts = { buffer = ev.buf, silent = true }
-
-		opts.desc = "Show LSP references"
-		keymap.set("n", "gR", picker.lsp_references, opts)
-		opts.desc = "Go to declaration"
-
-		keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-		opts.desc = "Show LSP definitions"
-		keymap.set("n", "gd", picker.lsp_definitions, opts)
-
-		opts.desc = "Show LSP implementations"
-		keymap.set("n", "gi", picker.lsp_implementations, opts)
-
-		opts.desc = "Show LSP type definitions"
-		keymap.set("n", "gt", picker.lsp_type_definitions, opts)
 
 		opts.desc = "See available code actions"
 		keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
@@ -84,12 +70,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		opts.desc = "Show line diagnostics"
 		keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
-
-		opts.desc = "Go to previous diagnostic"
-		keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-
-		opts.desc = "Go to next diagnostic"
-		keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
 		opts.desc = "Restart LSP"
 		keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
