@@ -80,11 +80,13 @@ vim.lsp.config("ty", {
 		},
 	},
 })
+vim.lsp.config("tailwindcss", {})
 vim.diagnostic.config({ virtual_text = true })
 
 vim.lsp.enable({
 	"lua_ls",
 	"ty",
 	"ts_ls",
+	"tailwindcss",
 	"rust-analyzer",
 })
