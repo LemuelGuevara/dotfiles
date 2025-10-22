@@ -75,6 +75,7 @@ vim.lsp.config("ty", {
 			},
 			experimental = {
 				rename = true,
+				autoImport = true,
 			},
 		},
 	},
