@@ -1,0 +1,56 @@
+{
+  "plugins": {
+    "blink.cmp": {
+      "rev": "b19413d",
+      "version": "1.0.0 - 2.0.0"
+    },
+    "conform.nvim": {
+      "rev": "afce105"
+    },
+    "cord.nvim": {
+      "rev": "1af0ff6"
+    },
+    "fidget.nvim": {
+      "rev": "e32b672"
+    },
+    "friendly-snippets": [],
+    "gitsigns.nvim": {
+      "rev": "cdafc32"
+    },
+    "lazygit.nvim": [],
+    "lualine.nvim": {
+      "rev": "47f91c4"
+    },
+    "mason-tool-installer.nvim": [],
+    "mason.nvim": {
+      "rev": "57e5a8a"
+    },
+    "nvim-autopairs": {
+      "rev": "7a2c97c"
+    },
+    "nvim-lspconfig": {
+      "rev": "30a2b19"
+    },
+    "nvim-treesitter": {
+      "rev": "bb83a676",
+      "version": "'main'"
+    },
+    "nvim-ts-autotag": {
+      "version": "'main'"
+    },
+    "nvim-web-devicons": {
+      "rev": "8dcb311"
+    },
+    "oil.nvim": {
+      "rev": "01cb3a8"
+    },
+    "plenary.nvim": [],
+    "snacks.nvim": {
+      "rev": "fe7cfe9"
+    },
+    "vague.nvim": {
+      "rev": "dba2805"
+    },
+    "vim-tmux-navigator": []
+  }
+}
