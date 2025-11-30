@@ -35,3 +35,32 @@ zinit wait lucid for \
     zsh-users/zsh-autosuggestions
 
 eval "$(starship init zsh)"
+
+# bun completions
+[ -s "/home/lemuelguevara/.bun/_bun" ] && source "/home/lemuelguevara/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/home/lemuelguevara/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# eza
+alias ls='eza -l --icons'
+
+export PHONE_MAC_ADDRESS="FC:31:5D:5F:A7:3C"
+
+. "$HOME/.local/bin/env"
+
+
+export JAVA_HOME="$HOME/java/jdk-17.0.16+8"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+export KAGGLE_USERNAME="lemueljohnguevara"
+export KAGGLE_KEY="35e499d61ef739bc6a3ad5bf0b3a1f4f"
