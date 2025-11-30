@@ -71,7 +71,7 @@ vim.lsp.config("ty", {
 		ty = {
 			diagnosticMode = "workspace",
 			inlayHints = {
-				variableTypes = false,
+				variableTypes = true,
 			},
 			experimental = {
 				rename = true,
