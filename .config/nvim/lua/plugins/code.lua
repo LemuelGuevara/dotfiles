@@ -9,6 +9,7 @@ local ensure_installed = {
 	"selene", -- Lua
 
 	-- LSP Servers
+	"ty",
 	"pyrefly",
 	"lua-language-server", -- Lua
 	"typescript-language-server", -- JS/TS
