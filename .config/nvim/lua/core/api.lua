@@ -21,3 +21,10 @@ vim.api.nvim_create_autocmd("PackChanged", {
 		end
 	end,
 })
+
+-- PackUpdate
+vim.api.nvim_create_user_command("PackUpdate", function()
+	print("Updating plugins...")
+	vim.pack.update()
+	print("Plugins updated!")
+end, { desc = "Update all plugins (vim.pack)" })

@@ -31,8 +31,4 @@ keymap.set("n", "<c-l>", ":wincmd l<CR>")
 keymap.set("n", "<leader>o", ":update<CR> :source<CR>")
 
 -- Update plugins
-keymap.set("n", "<leader>ps", function()
-	vim.pack.update({}, {
-		force = true,
-	})
-end, { desc = "Update plugins" })
+keymap.set("n", "<leader>pu", "<cmd>PackUpdate<CR>", { noremap = true, silent = true })
