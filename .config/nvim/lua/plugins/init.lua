@@ -23,6 +23,7 @@ vim.pack.add({
 	{ src = "https://github.com/folke/snacks.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 	{ src = "https://github.com/kdheepak/lazygit.nvim" },
+	{ src = "https://github.com/OXY2DEV/markview.nvim" },
 
 	-- Others
 	{ src = "https://github.com/vyfor/cord.nvim" },
