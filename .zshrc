@@ -56,11 +56,14 @@ alias ls='eza -l --icons'
 
 export PHONE_MAC_ADDRESS="FC:31:5D:5F:A7:3C"
 
-. "$HOME/.local/bin/env"
-
-
 export JAVA_HOME="$HOME/java/jdk-17.0.16+8"
 export PATH="$JAVA_HOME/bin:$PATH"
 
 export KAGGLE_USERNAME="lemueljohnguevara"
 export KAGGLE_KEY="35e499d61ef739bc6a3ad5bf0b3a1f4f"
+
+# Nix aliases
+alias nix-rebuild="sudo nixos-rebuild switch --flake ~/nixos-dotfiles#hyprnixos"
+alias nix-clean="sudo nix-collect-garbage -d"
+alias nix-add="nvim ~/nixos-dotfiles/home.nix"
+alias nix-add-critical="nvim ~/nixos-dotfiles/configuration.nix"
