@@ -33,6 +33,6 @@ end, { desc = "Update all plugins (vim.pack)" })
 vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = "*.nix",
 	callback = function()
-		vim.cmd("split | term nix-rebuild")
+		vim.cmd("split | term git add . && nix-rebuild && exit")
 	end,
 })
