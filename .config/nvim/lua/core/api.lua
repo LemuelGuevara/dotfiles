@@ -29,10 +29,17 @@ vim.api.nvim_create_user_command("PackUpdate", function()
 	print("Plugins updated!")
 end, { desc = "Update all plugins (vim.pack)" })
 
--- Add auto rebuilding of nix files upon save
+-- Auto git add .nix files upon save (background)
 vim.api.nvim_create_autocmd("BufWritePost", {
 	pattern = "*.nix",
 	callback = function()
-		vim.cmd("split | term git add . && nix-rebuild && exit")
+		vim.fn.jobstart("git add **/*.nix", {
+			cwd = vim.fn.expand("~/nixos-dotfiles"),
+			on_exit = function(_, code)
+				if code ~= 0 then
+					vim.notify("Git Add Failed!", vim.log.levels.ERROR)
+				end
+			end,
+		})
 	end,
 })
