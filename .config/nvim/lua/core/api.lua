@@ -28,3 +28,11 @@ vim.api.nvim_create_user_command("PackUpdate", function()
 	vim.pack.update()
 	print("Plugins updated!")
 end, { desc = "Update all plugins (vim.pack)" })
+
+-- Add auto rebuilding of nix files upon save
+vim.api.nvim_create_autocmd("BufWritePost", {
+	pattern = "*.nix",
+	callback = function()
+		vim.cmd("split | term nix-rebuild")
+	end,
+})
