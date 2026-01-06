@@ -81,6 +81,20 @@ vim.lsp.config("ty", {
 	},
 })
 vim.lsp.config("tailwindcss", {})
+vim.lsp.config("nixd", {
+	cmd = { "nixd" },
+	settings = {
+		nixd = {
+			nixpkgs = {
+				expr = "import <nixpkgs> { }",
+			},
+			formatting = {
+				command = { "nixfmt" },
+			},
+		},
+	},
+})
+
 vim.diagnostic.config({ virtual_text = true })
 
 vim.lsp.enable({
@@ -89,4 +103,5 @@ vim.lsp.enable({
 	"ts_ls",
 	"tailwindcss",
 	"rust-analyzer",
+	"nixd",
 })
