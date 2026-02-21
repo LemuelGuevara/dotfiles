@@ -70,5 +70,4 @@ alias nix-add="nvim ~/nixos-dotfiles/home.nix"
 alias nix-add-critical="nvim ~/nixos-dotfiles/configuration.nix"
 
 export PATH="$HOME/.local/bin:$PATH"
-
-eval "$(/Users/lemuelguevara/.local/bin/mise activate zsh)" # added by https://mise.run/zsh
+eval "$(/home/lemuelguevara/.local/bin/mise activate zsh)"
