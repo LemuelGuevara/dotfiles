@@ -66,7 +66,9 @@ export KAGGLE_KEY="35e499d61ef739bc6a3ad5bf0b3a1f4f"
 alias nix-rebuild="sudo nixos-rebuild switch --flake ~/nixos-dotfiles#hyprnixos"
 alias nix-rebuild-upgrade="cd ~/nixos-dotfiles && nix flake update && sudo nixos-rebuild switch --flake .#hyprnixos"
 alias nix-clean="sudo nix-collect-garbage -d"
-alias nix-add="nvim ~/nixos-dotfiles/nixModules/system/packages.nix"
-alias nix-config="nvim ~/nixos-dotfiles/nixModules/system/configuration.nix"
+alias nix-add="nvim ~/nixos-dotfiles/home.nix"
+alias nix-add-critical="nvim ~/nixos-dotfiles/configuration.nix"
 
-export SDL_VIDEODRIVER=wayland
+export PATH="$HOME/.local/bin:$PATH"
+
+eval "$(/Users/lemuelguevara/.local/bin/mise activate zsh)" # added by https://mise.run/zsh
