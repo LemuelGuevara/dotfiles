@@ -1,0 +1,42 @@
+[language-server.biome]
+command = "biome"
+args = ["lsp-proxy"]
+
+[language-server.oxlint]
+command = "oxlint"
+args = ["--lsp"]
+
+[language-server.oxfmt]
+command = "oxfmt"
+args = ["--lsp"]
+
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
+
+[language-server.rumdl]
+command = "rumdl"
+args = ["server"]
+
+[language-server.ty]
+command = "ty"
+args = ["server"]
+
+[[language]]
+name = "json"
+auto-format = true
+language-servers = [{ name = "biome" }, { name = "oxfmt" }]
+
+[[language]]
+name = "markdown"
+language-servers = ["rumdl"]
+formatter = { command = "rumdl", args = ["check", "--fix", "--stdin"] }
+
+[[language]]
+name = "python"
+auto-format = true
+language-servers = [{ name = "ty" }, { name = "ruff" }]
+
+[[language]]
+name = "toml"
+auto-format = true
