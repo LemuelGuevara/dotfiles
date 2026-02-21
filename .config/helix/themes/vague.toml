@@ -3,7 +3,7 @@
 # Original: https://github.com/vague2k/vague.nvim
 
 ## User interface
-"ui.background" = { bg = "bg" }
+"ui.background" = { bg = "" }
 "ui.text" = "fg"
 "ui.text.focus" = { fg = "constant", bg = "line", modifiers = ["bold"] }
 "ui.text.inactive" = "comment"
@@ -57,8 +57,8 @@
 "ui.picker.header.column" = { fg = "parameter" }
 "ui.picker.header.column.active" = { fg = "constant", modifiers = ["bold"] }
 
-"ui.gutter" = { bg = "bg" }
-"ui.gutter.selected" = { bg = "line" }
+"ui.gutter" = { bg = "" }
+"ui.gutter.selected" = { bg = "" }
 
 "ui.highlight" = { bg = "visual" }
 "ui.highlight.frameline" = { bg = "search" }
