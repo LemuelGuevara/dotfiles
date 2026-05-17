@@ -104,4 +104,5 @@ vim.lsp.enable({
 	"tailwindcss",
 	"rust-analyzer",
 	"nixd",
+	"oxfmt",
 })

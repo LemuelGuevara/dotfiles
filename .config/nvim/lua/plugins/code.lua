@@ -1,11 +1,9 @@
 local ensure_installed = {
 	-- Formatters
 	"stylua", -- Lua
-	"prettierd", -- JS/TS/HTML/CSS
 	"ruff", -- Python
 
 	-- Linters
-	"eslint_d", -- JS/TS
 	"selene", -- Lua
 
 	-- LSP Servers
@@ -95,15 +93,13 @@ require("nvim-autopairs").setup({
 
 require("conform").setup({
 	formatters_by_ft = {
-		javascript = { "prettierd" },
-		typescript = { "prettierd" },
-		javascriptreact = { "prettierd" },
-		typescriptreact = { "prettierd" },
-		css = { "prettierd" },
-		html = { "prettierd" },
-		json = { "prettierd" },
-		yaml = { "prettierd" },
-		markdown = { "prettierd" },
+		javascript = { "oxfmt" },
+		javascriptreact = { "oxfmt" },
+		typescript = { "oxfmt" },
+		typescriptreact = { "oxfmt" },
+		json = { "oxfmt" },
+		vue = { "oxfmt" },
+		markdown = { "oxfmt" },
 		lua = { "stylua" },
 		python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
 	},
