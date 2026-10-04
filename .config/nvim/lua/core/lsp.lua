@@ -38,16 +38,13 @@ vim.lsp.config("pyrefly", {
 		},
 	},
 })
-vim.lsp.config("ts_ls", {
+vim.lsp.config("tsc", {
 	on_attach = function(_, bufnr)
 		local function organize_imports()
-			vim.lsp.buf_request_sync(bufnr, "workspace/executeCommand", {
-				command = "_typescript.organizeImports",
-				arguments = { vim.api.nvim_buf_get_name(bufnr) },
-				title = "",
-			}, 500)
-
-			vim.notify("Imports Organized", vim.log.levels.INFO)
+			vim.lsp.buf.code_action({
+				context = { only = { "source.organizeImports" }, diagnostics = {} },
+				apply = true,
+			})
 		end
 
 		vim.keymap.set(
@@ -100,7 +97,7 @@ vim.diagnostic.config({ virtual_text = true })
 vim.lsp.enable({
 	"lua_ls",
 	"ty",
-	"ts_ls",
+	"tsc",
 	"tailwindcss",
 	"rust-analyzer",
 	"nixd",
